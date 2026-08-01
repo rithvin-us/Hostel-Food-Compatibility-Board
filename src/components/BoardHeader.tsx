@@ -16,21 +16,18 @@ export function BoardHeader({
   onReset,
 }: Props) {
   return (
-    <header className="masthead">
-      <div className="masthead-inner">
-        <h1 className="wordmark">
-          Hostel Food Compatibility Board
-          <span className="wordmark-sub">one dish the whole floor can eat</span>
-        </h1>
+    <header className="topbar">
+      <div className="topbar-inner">
+        <h1 className="brand">Food Compatibility Board</h1>
 
-        <div className="masthead-controls">
+        <div className="topbar-actions">
           <div className="field">
             <label className="field-label" htmlFor="budget">
               Budget per person
             </label>
             <input
               id="budget"
-              className={`input input-budget ${budgetInvalid ? 'cell-invalid' : ''}`}
+              className={`input input-rupees ${budgetInvalid ? 'is-invalid' : ''}`}
               value={budget}
               onChange={(e) => onBudget(e.target.value)}
               inputMode="numeric"
@@ -41,10 +38,10 @@ export function BoardHeader({
           <button type="button" className="btn btn-primary" onClick={onCheck}>
             Check compatibility
           </button>
-          <button type="button" className="btn btn-quiet" onClick={onLoadSample}>
+          <button type="button" className="btn" onClick={onLoadSample}>
             Load sample
           </button>
-          <button type="button" className="btn btn-quiet" onClick={onReset}>
+          <button type="button" className="btn" onClick={onReset}>
             Reset
           </button>
         </div>

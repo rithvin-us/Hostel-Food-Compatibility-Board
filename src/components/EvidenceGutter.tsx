@@ -1,12 +1,9 @@
 import type { DishVerdict } from '../domain/types';
 
 /**
- * Three stacked tracks per dish row — diet, allergen, budget — so the whole table's
- * failure classes can be scanned in one vertical pass without reading any text.
- *
- * This is the problem statement's optional "compact visual evidence chips", built as
- * a scanning device rather than a badge row. It reads the verdict that was already
- * calculated; it never re-runs a rule, so it cannot change the contracted result.
+ * Three tracks per dish row — diet, allergen, budget — so the failure classes can
+ * be scanned down the whole table without reading. Reads the verdict that was
+ * already calculated; it never re-runs a rule.
  */
 export function EvidenceGutter({ verdict }: { verdict: DishVerdict }) {
   const dietOk = verdict.cells.every((c) => c.dietOk);
@@ -19,10 +16,10 @@ export function EvidenceGutter({ verdict }: { verdict: DishVerdict }) {
   ].join(', ');
 
   return (
-    <div className="gutter" role="img" aria-label={label}>
-      <span className={`gutter-track ${dietOk ? 'gutter-pass' : 'gutter-block'}`} />
-      <span className={`gutter-track ${allergenOk ? 'gutter-pass' : 'gutter-block'}`} />
-      <span className={`gutter-track ${verdict.budgetOk ? 'gutter-pass' : 'gutter-over'}`} />
+    <div className="evidence" role="img" aria-label={label}>
+      <span className={`evidence-track ${dietOk ? 'track-pass' : 'track-block'}`} />
+      <span className={`evidence-track ${allergenOk ? 'track-pass' : 'track-block'}`} />
+      <span className={`evidence-track ${verdict.budgetOk ? 'track-pass' : 'track-over'}`} />
     </div>
   );
 }

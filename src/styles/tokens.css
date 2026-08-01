@@ -1,58 +1,73 @@
 /*
- * Design tokens — the single source of truth for the board's look.
+ * Design tokens.
  *
- * Direction: a hostel warden's mess register. A working document, not a landing
- * page. Density and traceability beat polish.
+ * Register: product. This is a tool someone uses to make a decision, so the
+ * interface aims to disappear into the task — one type family, a restrained
+ * palette, and colour reserved for state rather than decoration.
  *
- * Three signal hues, because the contract has exactly three failure classes
- * (DIET / ALLERGEN / OVER_BUDGET). Colour encodes contract state; it is never
- * decoration, and it is never the only carrier — every coloured cell also shows
- * a glyph and the literal reason token, so the board reads in greyscale.
+ * Three signal hues, because the domain has exactly three failure classes
+ * (DIET / ALLERGEN / OVER_BUDGET). Colour is never the only carrier: every
+ * coloured cell also shows a glyph and the literal code, so the board reads
+ * in greyscale and to a screen reader.
  */
 
 @import url('/fonts/fonts.css');
 
 :root {
-  /* Palette */
-  --ink: #1a2430;
-  --register: #e4e9e3;
-  --card: #fafbf9;
+  /* Surfaces */
+  --bg: #e6eae5;
+  --surface: #fbfcfa;
+  --surface-sunken: #f2f4f0;
+
+  /* Ink — all three clear 4.5:1 on --surface. */
+  --ink: #16202a;
+  --ink-2: #414d58;
+  --ink-3: #5f6b75;
+
+  /* Lines */
+  --line: #d5dbd4;
+  --line-strong: #a7b1a6;
+
+  /* State */
   --pass: #1f6f52;
-  --block: #b23a2e;
-  --over: #b77a12;
+  --pass-bg: #e6f0ea;
+  --block: #ad3628;
+  --block-bg: #f8e8e5;
+  --over: #8a5a0a;
+  --over-bg: #faf0da;
+  --focus: #1e4fa3;
 
-  /* Derived surfaces — tints of the signal hues, mixed against the card. */
-  --pass-tint: #e8f1ec;
-  --block-tint: #f7e7e4;
-  --over-tint: #faf0dc;
+  /* Type — one family for the interface, one mono for data and codes. */
+  --sans: 'Public Sans', -apple-system, 'Segoe UI', system-ui, sans-serif;
+  --mono: 'DM Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
 
-  /* Ink at reduced weight, for rules and secondary text. */
-  --ink-70: #4a5763;
-  --ink-45: #7b8590;
-  --rule: #cfd6cf;
-  --rule-strong: #a9b3a9;
+  /* Fixed rem scale, ratio ~1.15. Product UI is viewed at consistent DPI. */
+  --t-xs: 0.75rem;
+  --t-sm: 0.8125rem;
+  --t-md: 0.875rem;
+  --t-lg: 1rem;
+  --t-xl: 1.25rem;
+  --t-2xl: 1.75rem;
 
-  /* Type */
-  --display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
-  --body: 'Public Sans', 'Segoe UI', system-ui, sans-serif;
-  --data: 'DM Mono', ui-monospace, 'Cascadia Mono', 'Consolas', monospace;
-
-  --t-display: 2.25rem;
-  --t-count: 3.5rem;
-  --t-h2: 0.75rem;
-  --t-body: 0.875rem;
-  --t-data: 0.8125rem;
-  --t-micro: 0.6875rem;
-
-  /* Spacing — a 4px base, so dense tables stay on a grid. */
+  /* Space, 4px base. */
   --s1: 4px;
   --s2: 8px;
   --s3: 12px;
   --s4: 16px;
-  --s5: 24px;
-  --s6: 32px;
-  --s7: 48px;
+  --s5: 20px;
+  --s6: 28px;
+  --s7: 40px;
 
-  --radius: 3px;
-  --shadow: 0 1px 0 rgba(26, 36, 48, 0.06), 0 1px 3px rgba(26, 36, 48, 0.06);
+  --radius: 4px;
+  --radius-sm: 3px;
+
+  --shadow-sm: 0 1px 2px rgba(22, 32, 42, 0.06);
+  --shadow: 0 1px 2px rgba(22, 32, 42, 0.05), 0 4px 12px rgba(22, 32, 42, 0.05);
+
+  /* Semantic stacking order — never arbitrary values. */
+  --z-sticky: 100;
+  --z-dropdown: 200;
+  --z-toast: 400;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }

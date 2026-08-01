@@ -37,7 +37,7 @@ describe('AC1 — one action loads the built-in board and shows two compatible d
 
   it('starts with nothing calculated', () => {
     setup();
-    expect(screen.getByText('Nothing calculated yet')).toBeTruthy();
+    expect(screen.getByText('No result yet')).toBeTruthy();
   });
 });
 
@@ -66,11 +66,11 @@ describe('AC3 — searching "wheat" narrows the display but not the count', () =
     await user.click(check());
 
     await user.type(searchBox(), 'wheat');
-    expect(screen.getByText(/Showing 1 of 2 after searching/)).toBeTruthy();
+    expect(screen.getByText(/Showing 1 of 2 for/)).toBeTruthy();
     expect(screen.getByText('2')).toBeTruthy();
 
     await user.clear(searchBox());
-    expect(screen.getByText('Counted before any search is applied.')).toBeTruthy();
+    expect(screen.queryByText(/Showing/)).toBeNull();
   });
 
   it('never surfaces an excluded dish', async () => {
@@ -137,7 +137,7 @@ describe('AC6 — reset returns a clean built-in board', () => {
     await user.click(reset());
 
     expect(screen.queryByText('INVALID_INPUT')).toBeNull();
-    expect(screen.getByText('Nothing calculated yet')).toBeTruthy();
+    expect(screen.getByText('No result yet')).toBeTruthy();
     expect((budgetBox() as HTMLInputElement).value).toBe('150');
     expect((screen.getByLabelText('Dish 1 price in rupees') as HTMLInputElement).value).toBe('110');
 
@@ -164,7 +164,7 @@ describe('screen stays synchronized with the inputs', () => {
 
     await user.type(screen.getByLabelText('Resident 1 name'), 'x');
 
-    expect(screen.getByText('Nothing calculated yet')).toBeTruthy();
+    expect(screen.getByText('No result yet')).toBeTruthy();
     expect(screen.queryByText('dishes everyone can eat')).toBeNull();
   });
 
@@ -172,7 +172,7 @@ describe('screen stays synchronized with the inputs', () => {
     const { user } = setup();
     await user.click(check());
     await user.type(budgetBox(), '0');
-    expect(screen.getByText('Nothing calculated yet')).toBeTruthy();
+    expect(screen.getByText('No result yet')).toBeTruthy();
   });
 
   it('keeps the result when only the search box changes', async () => {

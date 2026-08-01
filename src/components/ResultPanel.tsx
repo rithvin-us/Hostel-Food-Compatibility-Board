@@ -1,7 +1,7 @@
 import type { DishVerdict } from '../domain/types';
 
 interface Props {
-  /** The UNFILTERED count, frozen at evaluate time. The search box must not change it. */
+  /** The unfiltered count, frozen at evaluate time. Search must not change it. */
   compatibleCount: number;
   filtered: DishVerdict[];
   query: string;
@@ -10,23 +10,22 @@ interface Props {
 
 export function ResultPanel({ compatibleCount, filtered, query, onQuery }: Props) {
   const trimmed = query.trim();
-  const narrowed = trimmed !== '';
 
   return (
     <div className="result">
-      <div className="panel tally">
-        <span className="tally-number">{compatibleCount}</span>
+      <div className="tally">
+        <span className="tally-figure">{compatibleCount}</span>
         <span className="tally-label">
           {compatibleCount === 1 ? 'dish everyone can eat' : 'dishes everyone can eat'}
         </span>
-        <p className="tally-note">
-          {narrowed
-            ? `Showing ${filtered.length} of ${compatibleCount} after searching “${trimmed}”. The count stays on the full result.`
-            : 'Counted before any search is applied.'}
-        </p>
+        {trimmed !== '' && (
+          <p className="tally-note">
+            Showing {filtered.length} of {compatibleCount} for “{trimmed}”
+          </p>
+        )}
       </div>
 
-      <div className="panel picks">
+      <div className="picks">
         <div className="field">
           <label className="field-label" htmlFor="search">
             Search compatible dishes
@@ -36,7 +35,7 @@ export function ResultPanel({ compatibleCount, filtered, query, onQuery }: Props
             className="input input-search"
             value={query}
             onChange={(e) => onQuery(e.target.value)}
-            placeholder="cafe, dish or ingredient tag"
+            placeholder="Cafe, dish or ingredient"
             autoComplete="off"
           />
         </div>
@@ -45,7 +44,7 @@ export function ResultPanel({ compatibleCount, filtered, query, onQuery }: Props
           <p className="empty-body">
             {compatibleCount === 0
               ? 'No dish clears every resident at this budget. Raise the budget or relax a restriction.'
-              : `Nothing compatible matches “${trimmed}”. Clear the search to see all ${compatibleCount}.`}
+              : `Nothing compatible matches “${trimmed}”.`}
           </p>
         ) : (
           <ul className="pick-list">
@@ -58,7 +57,7 @@ export function ResultPanel({ compatibleCount, filtered, query, onQuery }: Props
                 <span className="pick-cafe">
                   <Highlight text={dish.cafe} query={trimmed} />
                 </span>
-                <span className="price">₹{dish.price}</span>
+                <span className="amount">₹{dish.price}</span>
                 <span className="pick-tags">
                   {dish.tags.map((tag, i) => (
                     <span key={tag}>
@@ -76,7 +75,7 @@ export function ResultPanel({ compatibleCount, filtered, query, onQuery }: Props
   );
 }
 
-/** Marks the matched substring so it is obvious why a row survived the search. */
+/** Marks the matched substring, so it is obvious why a row survived the search. */
 function Highlight({ text, query }: { text: string; query: string }) {
   if (query === '') return <>{text}</>;
 
@@ -86,7 +85,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
   return (
     <>
       {text.slice(0, at)}
-      <mark className="mark">{text.slice(at, at + query.length)}</mark>
+      <mark>{text.slice(at, at + query.length)}</mark>
       {text.slice(at + query.length)}
     </>
   );

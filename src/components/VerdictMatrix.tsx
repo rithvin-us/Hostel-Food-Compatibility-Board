@@ -9,51 +9,46 @@ interface Props {
 }
 
 /**
- * The signature of the board: every dish crossed with every resident, with the
- * failing cell showing the same token that appears in the exclusion reason.
- * The screen is the spec output — nothing here is a paraphrase.
+ * Every dish crossed with every resident, plus the budget. A failing cell shows
+ * the same token that appears in the exclusion reason, so the screen is the
+ * output rather than a paraphrase of it.
  */
 export function VerdictMatrix({ verdicts, residents, budget }: Props) {
   return (
-    <div className="panel">
-      <div className="table-wrap">
+    <>
+      <div className="pane-body">
         <table className="matrix" aria-label="Verdict matrix">
           <thead>
             <tr>
-              <th className="col-gutter" scope="col">
+              <th className="th-evidence" scope="col">
                 <span className="sr-only">Evidence</span>
               </th>
-              <th className="col-dish" scope="col">
+              <th className="th-dish" scope="col">
                 Dish
               </th>
               {residents.map((name) => (
-                <th className="col-check" key={name} scope="col">
+                <th className="th-person" key={name} scope="col">
                   {name}
                 </th>
               ))}
-              <th className="col-check" scope="col">
+              <th className="th-person" scope="col">
                 Budget
               </th>
-              <th className="col-verdict" scope="col">
+              <th className="th-verdict" scope="col">
                 Verdict
               </th>
             </tr>
           </thead>
           <tbody>
-            {verdicts.map((verdict, index) => (
-              <tr
-                key={verdict.dish.id}
-                className={`matrix-row ${verdict.compatible ? 'row-compatible' : ''}`}
-                style={{ '--i': index } as React.CSSProperties}
-              >
-                <td className="col-gutter">
+            {verdicts.map((verdict) => (
+              <tr key={verdict.dish.id} className={verdict.compatible ? 'row-pass' : ''}>
+                <td className="td-evidence">
                   <EvidenceGutter verdict={verdict} />
                 </td>
 
                 <td data-label="Dish">
                   <span className="dish-id">{verdict.dish.id}</span>{' '}
                   <span className="dish-name">{verdict.dish.name}</span>
-                  <br />
                   <span className="dish-meta">
                     {verdict.dish.cafe} · {verdict.dish.diet} · {verdict.dish.tags.join(', ')}
                   </span>
@@ -61,12 +56,12 @@ export function VerdictMatrix({ verdicts, residents, budget }: Props) {
 
                 {verdict.cells.map((cell) => (
                   <td key={cell.resident} data-label={cell.resident}>
-                    <ResidentCellView dietOk={cell.dietOk} hits={cell.allergenHits} />
+                    <PersonCell dietOk={cell.dietOk} hits={cell.allergenHits} />
                   </td>
                 ))}
 
                 <td data-label="Budget">
-                  <BudgetCellView
+                  <BudgetCell
                     price={verdict.dish.price}
                     budget={budget}
                     budgetOk={verdict.budgetOk}
@@ -74,9 +69,7 @@ export function VerdictMatrix({ verdicts, residents, budget }: Props) {
                 </td>
 
                 <td data-label="Verdict">
-                  <span
-                    className={`verdict-tag ${verdict.compatible ? 'verdict-yes' : 'verdict-no'}`}
-                  >
+                  <span className={`verdict ${verdict.compatible ? 'verdict-pass' : 'verdict-fail'}`}>
                     {verdict.compatible ? '● Compatible' : '○ Excluded'}
                   </span>
                   <ReasonCodes reasons={verdict.reasons} />
@@ -89,29 +82,27 @@ export function VerdictMatrix({ verdicts, residents, budget }: Props) {
 
       <div className="legend">
         <span className="legend-item">
-          <span className="legend-swatch" style={{ background: 'var(--pass)' }} /> passes
+          <span className="swatch" style={{ background: 'var(--pass)' }} /> passes
         </span>
         <span className="legend-item">
-          <span className="legend-swatch" style={{ background: 'var(--block)' }} /> diet or allergen
-          block
+          <span className="swatch" style={{ background: 'var(--block)' }} /> diet or allergen
         </span>
         <span className="legend-item">
-          <span className="legend-swatch" style={{ background: 'var(--over)' }} /> over budget
+          <span className="swatch" style={{ background: 'var(--over)' }} /> over budget
         </span>
-        <span className="legend-item">Gutter tracks, top to bottom: diet · allergen · budget</span>
+        <span className="legend-item">Tracks: diet · allergen · budget</span>
       </div>
-    </div>
+    </>
   );
 }
 
-/** A resident's verdict on one dish. Shows the reason token, not a paraphrase. */
-function ResidentCellView({ dietOk, hits }: { dietOk: boolean; hits: string[] }) {
+function PersonCell({ dietOk, hits }: { dietOk: boolean; hits: string[] }) {
   if (dietOk && hits.length === 0) {
     return <span className="chip chip-pass">✓ ok</span>;
   }
 
   return (
-    <span className="chip-stack">
+    <span className="stack">
       {!dietOk && <span className="chip chip-block">✕ DIET</span>}
       {hits.map((tag) => (
         <span className="chip chip-block" key={tag}>
@@ -123,11 +114,10 @@ function ResidentCellView({ dietOk, hits }: { dietOk: boolean; hits: string[] })
 }
 
 /**
- * The budget cell. A price exactly equal to the budget is marked, because the
- * boundary case (₹150 dish against a ₹150 budget passes) is a graded criterion
- * and the jury should be able to see it rather than take our word for it.
+ * A price exactly equal to the budget is marked, because the boundary case
+ * (a ₹150 dish passes a ₹150 budget) is easy to get wrong and worth showing.
  */
-function BudgetCellView({
+function BudgetCell({
   price,
   budget,
   budgetOk,
@@ -138,8 +128,8 @@ function BudgetCellView({
 }) {
   if (!budgetOk) {
     return (
-      <span className="chip-stack">
-        <span className="price">₹{price}</span>
+      <span className="stack">
+        <span className="amount">₹{price}</span>
         <span className="chip chip-over">✕ OVER_BUDGET</span>
       </span>
     );
@@ -147,11 +137,9 @@ function BudgetCellView({
 
   const atBoundary = price === budget;
   return (
-    <span className="chip-stack">
-      <span className={`price ${atBoundary ? 'price-boundary' : ''}`}>₹{price}</span>
-      <span className="chip chip-pass">
-        {atBoundary ? `= ₹${budget}` : `≤ ₹${budget}`}
-      </span>
+    <span className="stack">
+      <span className="amount">₹{price}</span>
+      <span className="chip chip-pass">{atBoundary ? `= ₹${budget}` : `≤ ₹${budget}`}</span>
     </span>
   );
 }

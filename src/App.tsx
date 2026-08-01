@@ -24,86 +24,72 @@ export default function App() {
         onReset={actions.reset}
       />
 
-      <div className="shell">
-        <div className="tables">
-          <GroupTable
-            group={state.group}
-            onEdit={actions.editResident}
-            onAdd={actions.addResident}
-            onRemove={actions.removeResident}
-            isFlagged={isFlagged}
-          />
-          <DishTable
-            dishes={state.dishes}
-            budget={state.budget}
-            onEdit={actions.editDish}
-            onAdd={actions.addDish}
-            onRemove={actions.removeDish}
-            isFlagged={isFlagged}
-          />
-        </div>
-
-        <section className="section" aria-labelledby="verdict-heading">
-          <div className="section-head">
-            <h2 className="section-title" id="verdict-heading">
-              Verdict
-            </h2>
-            <p className="section-note">
-              Every dish against every resident, plus the budget. Failing cells show the exclusion
-              code itself.
-            </p>
-          </div>
-
-          {/* Three states, one at a time: not yet run, invalid input, or a result. */}
-          {report === null && (
-            <div className="panel empty">
-              <p className="empty-title">Nothing calculated yet</p>
-              <p className="empty-body">
-                Choose “Check compatibility” to run the built-in group of {state.group.length}{' '}
-                against {state.dishes.length} dishes at ₹{state.budget || '—'} per person.
-              </p>
-            </div>
-          )}
-
-          {report !== null && report.status !== 'OK' && (
-            <ValidationBanner code={report.status} errors={report.errors} />
-          )}
-
-          {report !== null && report.status === 'OK' && (
-            <VerdictMatrix
-              verdicts={report.verdicts}
-              residents={residentNames}
-              budget={report.budget}
+      <main className="shell">
+        {/* Both source tables share one panel, so they keep one column rhythm
+            and one height instead of drifting apart as rows are added. */}
+        <section className="panel">
+          <div className="inputs">
+            <GroupTable
+              group={state.group}
+              onEdit={actions.editResident}
+              onAdd={actions.addResident}
+              onRemove={actions.removeResident}
+              isFlagged={isFlagged}
             />
-          )}
+            <DishTable
+              dishes={state.dishes}
+              onEdit={actions.editDish}
+              onAdd={actions.addDish}
+              onRemove={actions.removeDish}
+              isFlagged={isFlagged}
+            />
+          </div>
         </section>
 
-        {report !== null && report.status === 'OK' && (
-          <section className="section" aria-labelledby="result-heading">
-            <div className="section-head">
-              <h2 className="section-title" id="result-heading">
-                Result
-              </h2>
-              <p className="section-note">
-                Search narrows what is displayed. It never changes the count.
-              </p>
-            </div>
-
-            <ResultPanel
-              compatibleCount={report.compatibleCount}
-              filtered={filtered}
-              query={state.query}
-              onQuery={actions.setQuery}
-            />
+        {/* Exactly one of three states: not yet run, invalid input, or a result. */}
+        {report === null && (
+          <section className="panel empty">
+            <p className="empty-title">No result yet</p>
+            <p className="empty-body">
+              Choose Check compatibility to test {state.dishes.length} dishes against{' '}
+              {state.group.length} residents.
+            </p>
           </section>
         )}
 
-        <footer className="foot">
-          <span>SI26_P02 · Hostel Food Compatibility Board</span>
-          <span>no backend · no database · no network calls</span>
-          <span>rules live in src/domain</span>
-        </footer>
-      </div>
+        {report !== null && report.status !== 'OK' && (
+          <div className="enter">
+            <ValidationBanner code={report.status} errors={report.errors} />
+          </div>
+        )}
+
+        {report !== null && report.status === 'OK' && (
+          <>
+            <section className="panel enter">
+              <div className="panel-head">
+                <h2 className="panel-title">Verdict</h2>
+              </div>
+              <VerdictMatrix
+                verdicts={report.verdicts}
+                residents={residentNames}
+                budget={report.budget}
+              />
+            </section>
+
+            <section className="panel">
+              <div className="panel-head">
+                <h2 className="panel-title">Result</h2>
+              </div>
+              <ResultPanel
+                compatibleCount={report.compatibleCount}
+                filtered={filtered}
+                query={state.query}
+                onQuery={actions.setQuery}
+              />
+            </section>
+          </>
+        )}
+      </main>
     </>
   );
 }
