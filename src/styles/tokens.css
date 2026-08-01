@@ -1,0 +1,58 @@
+/*
+ * Design tokens — the single source of truth for the board's look.
+ *
+ * Direction: a hostel warden's mess register. A working document, not a landing
+ * page. Density and traceability beat polish.
+ *
+ * Three signal hues, because the contract has exactly three failure classes
+ * (DIET / ALLERGEN / OVER_BUDGET). Colour encodes contract state; it is never
+ * decoration, and it is never the only carrier — every coloured cell also shows
+ * a glyph and the literal reason token, so the board reads in greyscale.
+ */
+
+@import url('/fonts/fonts.css');
+
+:root {
+  /* Palette */
+  --ink: #1a2430;
+  --register: #e4e9e3;
+  --card: #fafbf9;
+  --pass: #1f6f52;
+  --block: #b23a2e;
+  --over: #b77a12;
+
+  /* Derived surfaces — tints of the signal hues, mixed against the card. */
+  --pass-tint: #e8f1ec;
+  --block-tint: #f7e7e4;
+  --over-tint: #faf0dc;
+
+  /* Ink at reduced weight, for rules and secondary text. */
+  --ink-70: #4a5763;
+  --ink-45: #7b8590;
+  --rule: #cfd6cf;
+  --rule-strong: #a9b3a9;
+
+  /* Type */
+  --display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --body: 'Public Sans', 'Segoe UI', system-ui, sans-serif;
+  --data: 'DM Mono', ui-monospace, 'Cascadia Mono', 'Consolas', monospace;
+
+  --t-display: 2.25rem;
+  --t-count: 3.5rem;
+  --t-h2: 0.75rem;
+  --t-body: 0.875rem;
+  --t-data: 0.8125rem;
+  --t-micro: 0.6875rem;
+
+  /* Spacing — a 4px base, so dense tables stay on a grid. */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+
+  --radius: 3px;
+  --shadow: 0 1px 0 rgba(26, 36, 48, 0.06), 0 1px 3px rgba(26, 36, 48, 0.06);
+}
