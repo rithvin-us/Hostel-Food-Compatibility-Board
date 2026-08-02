@@ -1,4 +1,4 @@
-import type { DishVerdict, Reason } from './types';
+import type { DishVerdict } from './types';
 
 export interface HarmonyResult {
   score: number;
@@ -130,10 +130,12 @@ export function computeResidentFriction(
       } else if (reason.startsWith('ALLERGEN:')) {
         const parts = reason.split(':');
         const resident = parts[1];
-        const entry = map.get(resident);
-        if (entry) {
-          entry.rejectionCount++;
-          entry.allergenRejections++;
+        if (resident) {
+          const entry = map.get(resident);
+          if (entry) {
+            entry.rejectionCount++;
+            entry.allergenRejections++;
+          }
         }
       }
     }
@@ -190,16 +192,18 @@ export function computeSmartUnlocker(
 
   if (allergenOnlyDishes.length > 0) {
     const dish = allergenOnlyDishes[0];
-    const reason = dish.reasons[0];
-    const parts = reason.split(':');
-    const resident = parts[1];
-    const tag = parts[2];
+    if (dish && dish.reasons.length > 0) {
+      const reason = dish.reasons[0];
+      const parts = reason.split(':');
+      const resident = parts[1] ?? '';
+      const tag = parts[2] ?? '';
 
-    return {
-      type: 'ALLERGEN_MODIFICATION',
-      message: `Removing or substituting ${tag} in ${dish.dish.name} unlocks it for ${resident}.`,
-      impactDishNames: [dish.dish.name],
-    };
+      return {
+        type: 'ALLERGEN_MODIFICATION',
+        message: `Removing or substituting ${tag} in ${dish.dish.name} unlocks it for ${resident}.`,
+        impactDishNames: [dish.dish.name],
+      };
+    }
   }
 
   return null;
