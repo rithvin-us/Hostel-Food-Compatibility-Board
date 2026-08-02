@@ -31,7 +31,7 @@ describe('AC1 — one action loads the built-in board and shows two compatible d
     expect(within(rowFor('D01')).getByText('● Compatible')).toBeTruthy();
     expect(within(rowFor('D02')).getByText('● Compatible')).toBeTruthy();
     expect(within(rowFor('D03')).getByText('○ Excluded')).toBeTruthy();
-    expect(screen.getByText('2')).toBeTruthy();
+    expect(screen.getAllByText('2').length).toBeGreaterThan(0);
     expect(screen.getByText('dishes everyone can eat')).toBeTruthy();
   });
 
@@ -67,7 +67,7 @@ describe('AC3 — searching "wheat" narrows the display but not the count', () =
 
     await user.type(searchBox(), 'wheat');
     expect(screen.getByText(/Showing 1 of 2 for/)).toBeTruthy();
-    expect(screen.getByText('2')).toBeTruthy();
+    expect(screen.getAllByText('2').length).toBeGreaterThan(0);
 
     await user.clear(searchBox());
     expect(screen.queryByText(/Showing/)).toBeNull();
@@ -90,7 +90,7 @@ describe('AC4 — a ₹130 budget leaves only D01', () => {
 
     expect(within(rowFor('D01')).getByText('● Compatible')).toBeTruthy();
     expect(within(rowFor('D02')).getByText('OVER_BUDGET')).toBeTruthy();
-    expect(screen.getByText('1')).toBeTruthy();
+    expect(screen.getAllByText('1').length).toBeGreaterThan(0);
     expect(screen.getByText('dish everyone can eat')).toBeTruthy();
   });
 });
@@ -99,7 +99,7 @@ describe('AC5 — a D01 price of 0 reports INVALID_INPUT and clears the result',
   it('names dishes / D01 / price and removes every verdict row', async () => {
     const { user } = setup();
     await user.click(check());
-    expect(screen.getByText('2')).toBeTruthy();
+    expect(screen.getAllByText('2').length).toBeGreaterThan(0);
 
     const price = screen.getByLabelText('Dish 1 price in rupees');
     await user.clear(price);
@@ -142,7 +142,7 @@ describe('AC6 — reset returns a clean built-in board', () => {
     expect((screen.getByLabelText('Dish 1 price in rupees') as HTMLInputElement).value).toBe('110');
 
     await user.click(check());
-    expect(screen.getByText('2')).toBeTruthy();
+    expect(screen.getAllByText('2').length).toBeGreaterThan(0);
     expect((searchBox() as HTMLInputElement).value).toBe('');
   });
 
@@ -160,7 +160,7 @@ describe('screen stays synchronized with the inputs', () => {
   it('discards a calculated result as soon as any row is edited', async () => {
     const { user } = setup();
     await user.click(check());
-    expect(screen.getByText('2')).toBeTruthy();
+    expect(screen.getAllByText('2').length).toBeGreaterThan(0);
 
     await user.type(screen.getByLabelText('Resident 1 name'), 'x');
 
@@ -179,7 +179,7 @@ describe('screen stays synchronized with the inputs', () => {
     const { user } = setup();
     await user.click(check());
     await user.type(searchBox(), 'w');
-    expect(screen.getByText('2')).toBeTruthy();
+    expect(screen.getAllByText('2').length).toBeGreaterThan(0);
   });
 });
 

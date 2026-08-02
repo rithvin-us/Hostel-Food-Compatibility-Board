@@ -1,3 +1,4 @@
+import { AnalyticsPanel } from './components/AnalyticsPanel';
 import { BoardHeader } from './components/BoardHeader';
 import { DishTable } from './components/DishTable';
 import { GroupTable } from './components/GroupTable';
@@ -67,7 +68,18 @@ export default function App() {
           <>
             <section className="panel enter">
               <div className="panel-head">
-                <h2 className="panel-title">Verdict</h2>
+                <h2 className="panel-title">Analytics & Group Insights</h2>
+              </div>
+              <AnalyticsPanel
+                verdicts={report.verdicts}
+                residents={residentNames}
+                budget={report.budget}
+              />
+            </section>
+
+            <section className="panel enter">
+              <div className="panel-head">
+                <h2 className="panel-title">Verdict Matrix</h2>
               </div>
               <VerdictMatrix
                 verdicts={report.verdicts}

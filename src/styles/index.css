@@ -849,3 +849,307 @@ mark {
     display: none;
   }
 }
+
+/* --------------------------------------------------------- analytics panel ---- */
+
+.analytics-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  margin-bottom: var(--s2);
+}
+
+.feast-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  padding: var(--s4) var(--s5);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+}
+
+.feast-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.feast-text h3 {
+  margin: 0 0 2px 0;
+  font-size: var(--t-lg);
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.feast-text p {
+  margin: 0;
+  font-size: var(--t-sm);
+  opacity: 0.95;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--s4);
+}
+
+.analytics-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--s4);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  transition: transform 150ms var(--ease), box-shadow 150ms var(--ease);
+}
+
+.analytics-card:hover {
+  box-shadow: var(--shadow);
+}
+
+.analytics-card-title {
+  font-size: var(--t-sm);
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.analytics-subtext {
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+}
+
+.harmony-status-chip {
+  font-size: var(--t-xs);
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.status-feast {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-high {
+  background: var(--pass-bg);
+  color: var(--pass);
+}
+
+.status-moderate {
+  background: var(--over-bg);
+  color: var(--over);
+}
+
+.status-low {
+  background: var(--block-bg);
+  color: var(--block);
+}
+
+.harmony-body {
+  display: flex;
+  align-items: center;
+  gap: var(--s5);
+}
+
+.gauge-container {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  flex-shrink: 0;
+}
+
+.gauge-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.gauge-bg {
+  fill: none;
+  stroke: var(--surface-sunken);
+}
+
+.gauge-fill {
+  fill: none;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 600ms var(--ease);
+}
+
+.gauge-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gauge-number {
+  font-family: var(--mono);
+  font-size: var(--t-lg);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.gauge-sub {
+  font-size: 0.65rem;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.harmony-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+}
+
+.stat-pill {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-num {
+  font-family: var(--mono);
+  font-size: var(--t-xl);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.stat-lbl {
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+}
+
+.stat-divider {
+  font-size: var(--t-xl);
+  color: var(--line-strong);
+}
+
+/* Breakdown bars */
+.bars-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+
+.bar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--t-xs);
+  color: var(--ink-2);
+}
+
+.bar-val {
+  font-family: var(--mono);
+  font-weight: 600;
+}
+
+.bar-track {
+  height: 8px;
+  background: var(--surface-sunken);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 400ms var(--ease);
+}
+
+.fill-diet {
+  background: #3b82f6;
+}
+
+.fill-allergen {
+  background: #ef4444;
+}
+
+.fill-budget {
+  background: #f59e0b;
+}
+
+/* Friction card */
+.friction-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+}
+
+.friction-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+.friction-row:last-child {
+  border-bottom: none;
+}
+
+.friction-name {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.friction-badges {
+  display: flex;
+  gap: 4px;
+}
+
+.friction-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--mono);
+}
+
+.badge-diet {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.badge-allergen {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.badge-clean {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+/* Unlocker card */
+.unlocker-card {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-color: #bae6fd;
+}
+
+.unlocker-msg {
+  margin: 0;
+  font-size: var(--t-sm);
+  color: #0369a1;
+  font-weight: 500;
+  line-height: 1.4;
+}
+

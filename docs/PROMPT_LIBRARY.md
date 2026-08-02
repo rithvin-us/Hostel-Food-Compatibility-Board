@@ -107,3 +107,15 @@ Providing clear visual layout directives ensures the interface achieves high vis
 
 ### Rationale & Strategy
 Benchmarking the implementation against an explicit design system and coding standard empowers the model to perform rigorous self-correction, elevating both code quality and visual design consistency.
+
+---
+
+## 10. Data-Driven Analytics & Visual Engagement
+
+### Refined Prompt
+
+> Design and integrate an interactive analytics and decision-support module into the evaluation results view while strictly preserving the underlying problem statement contract, exact exclusion strings, and domain rules. Derive all statistical metrics (Group Harmony Index, root-cause exclusion percentages, resident friction scores, and single-change unlocker recommendations) as pure TypeScript domain functions in `src/domain/analytics.ts`. Render the visual analytics using pure SVG circular gauges, horizontal progress bars, dynamic status chips, and callout banners without adding third-party charting libraries. Ensure the visual aesthetic is vibrant, accessible, and seamlessly integrated into the application layout.
+
+### Rationale & Strategy
+Layering analytics onto a strict contract verification system transforms standard tabular output into actionable intelligence without risking compliance drift. Enforcing zero external charting dependencies keeps the engine lightweight and 100% headlessly unit-testable.
+
