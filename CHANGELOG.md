@@ -4,6 +4,30 @@ All notable changes to the Hostel Food Compatibility Board project are documente
 
 ---
 
+## [1.4.0] - 2026-08-02
+
+### Added
+- **CI (`.github/workflows/ci.yml`)**: runs `typecheck`, `test`, and `build` on every push and pull request to `main`.
+- **`LICENSE`**: MIT.
+- **Live deployment link**: added to `README.md` (top of file and Deploy section) — `https://hostel-food-compatibility-board.vercel.app`, confirmed live via the GitHub commit-status API against the latest `main` push.
+
+---
+
+## [1.3.0] - 2026-08-02
+
+### Added
+- **Tag-Chip Input (`src/components/TagInput.tsx`)**: Resident allergens and dish ingredient tags are now entered as removable chips — type a value, press Enter or `,` to commit it, Backspace on an empty draft removes the last chip — instead of one raw comma-separated text field. Pasting a comma-separated string still splits into one chip per segment, including blank ones, so `INVALID_INPUT` for a blank tag (e.g. `WHEAT,,TOMATO`) is still reachable exactly as before. Wraps the existing `onEdit(key, field, value)` flow unchanged — `src/state/useBoard.ts` still receives a single comma-joined string and still owns all splitting/normalization; this is a UI-layer change only.
+- Wired into `GroupTable.tsx` (Allergens column) and `DishTable.tsx` (Ingredients column).
+
+### Fixed
+- **`README.md` encoding**: the file was UTF-16LE with no BOM (GitHub rendered it as a Targa image, not text). Rewritten as plain UTF-8 with the same content, plus the ₹ symbol restored where it had been silently dropped.
+
+### Maintained & Verified
+- Zero changes to `src/domain/*` or `src/state/useBoard.ts` — same split/normalize/validate pipeline as before, only the input widget changed.
+- Test Suite: 128/128 tests passing, `tsc -b` clean, `vite build` clean.
+
+---
+
 ## [1.2.0] - 2026-08-02
 
 ### Changed

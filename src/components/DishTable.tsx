@@ -1,5 +1,6 @@
 import { DISH_DIET_CLASSES } from '../domain/types';
 import type { DishInput } from '../domain/types';
+import { TagInput } from './TagInput';
 
 interface Props {
   dishes: DishInput[];
@@ -103,13 +104,11 @@ export function DishTable({ dishes, onEdit, onAdd, onRemove, isFlagged }: Props)
                     </select>
                   </td>
                   <td>
-                    <input
-                      className={`cell cell-mono ${
-                        isFlagged('dishes', rows, 'tags') ? 'is-invalid' : ''
-                      }`}
-                      value={dish.tags.join(', ')}
-                      onChange={(e) => onEdit(dish.key, 'tags', e.target.value)}
-                      aria-label={`Dish ${index + 1} ingredient tags, comma separated`}
+                    <TagInput
+                      values={dish.tags}
+                      onChange={(value) => onEdit(dish.key, 'tags', value)}
+                      invalid={isFlagged('dishes', rows, 'tags')}
+                      ariaLabel={`Dish ${index + 1} ingredient tags`}
                     />
                   </td>
                   <td>

@@ -1,5 +1,6 @@
 import { DIET_CLASSES } from '../domain/types';
 import type { ResidentInput } from '../domain/types';
+import { TagInput } from './TagInput';
 
 interface Props {
   group: ResidentInput[];
@@ -75,14 +76,12 @@ export function GroupTable({ group, onEdit, onAdd, onRemove, isFlagged }: Props)
                     </select>
                   </td>
                   <td>
-                    <input
-                      className={`cell cell-mono ${
-                        isFlagged('group', rows, 'allergens') ? 'is-invalid' : ''
-                      }`}
-                      value={resident.allergens.join(', ')}
-                      onChange={(e) => onEdit(resident.key, 'allergens', e.target.value)}
+                    <TagInput
+                      values={resident.allergens}
+                      onChange={(value) => onEdit(resident.key, 'allergens', value)}
+                      invalid={isFlagged('group', rows, 'allergens')}
                       placeholder="none"
-                      aria-label={`Resident ${index + 1} allergen tags, comma separated`}
+                      ariaLabel={`Resident ${index + 1} allergen tags`}
                     />
                   </td>
                   <td className="td-action">

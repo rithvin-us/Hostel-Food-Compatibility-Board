@@ -396,6 +396,90 @@ tr:hover .btn-remove,
   background: var(--block-bg);
 }
 
+/* Tag input — type a value, Enter or "," commits it as a removable chip.
+   Borrows the .cell hover/focus language so it still reads as plain text
+   until touched, rather than looking like a form the moment the page loads. */
+.tag-input {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  min-width: 0;
+  min-height: 26px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  padding: 3px var(--s2);
+  transition: border-color 150ms var(--ease), background 150ms var(--ease);
+}
+
+.tag-input:hover,
+.tag-input:focus-within {
+  border-color: var(--line-strong);
+  background: var(--surface);
+}
+
+.tag-input:focus-within {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px rgba(30, 79, 163, 0.15);
+}
+
+.tag-input.is-invalid {
+  border-color: var(--block);
+  background: var(--block-bg);
+}
+
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 3px 1px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-sunken);
+  border: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.tag-chip-blank {
+  color: var(--block);
+  font-style: italic;
+}
+
+.tag-chip-remove {
+  border: none;
+  background: none;
+  padding: 0 2px;
+  line-height: 1;
+  font-size: var(--t-sm);
+  color: var(--ink-3);
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.tag-chip-remove:hover {
+  color: var(--block);
+  background: var(--block-bg);
+}
+
+.tag-input-field {
+  flex: 1 1 60px;
+  min-width: 60px;
+  border: none;
+  background: none;
+  padding: 2px 0;
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--ink);
+}
+
+.tag-input-field:focus {
+  outline: none;
+}
+
 /* ------------------------------------------------------------ matrix ---- */
 
 .matrix {

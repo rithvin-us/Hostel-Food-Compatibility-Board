@@ -130,3 +130,14 @@ Layering analytics onto a strict contract verification system transforms standar
 ### Rationale & Strategy
 Naming the failure mode precisely ("a generic dashboard bolted onto the board" rather than "make it prettier") steers the model toward *consistency* with the existing system instead of the default AI-dashboard template — donut gauge, gradient hero banner, arbitrary categorical palette — it would otherwise reach for. Requiring that every chart "expose a fact the current version hides" forces new information architecture instead of a re-skin, and pinning the verification steps (`tsc -b`, full suite, responsive range) keeps a purely visual refactor from silently drifting into a contract or behavior change.
 
+---
+
+## 12. Ambiguous Feature Request → Clarified Scope, Then Full-Repo Audit
+
+### Refined Prompt
+
+> Two independent asks. First: "allergens must be added as tags when given as input" is ambiguous — it could mean (a) a chip/tag-style input UX for the allergens and ingredient-tags fields, or (b) a belief that allergens and ingredient tags aren't already matched against each other in the domain logic (they are — confirm via `src/domain/rules.ts` before assuming a gap). Ask which is meant rather than guessing; a UI-widget change and a domain-logic change have very different blast radii. Once confirmed, implement the chip input as a drop-in replacement for the existing raw comma-separated `<input>` — it must still funnel through the same `onEdit(key, field, value)` callback and `splitCommaList` reducer path so validation, normalization, and the `INVALID_INPUT` blank-tag case are all untouched. Second: audit the entire problem statement and interview guide against the current repository state — not just the code, every shipped file — and rate the project on simplicity, feasibility, deployment readiness, contract compatibility, and logic quality, the way a SaaS product would be judged. Don't limit the audit to source files: open every doc and asset actually committed, including ones that look fine at a glance (a `README.md` that renders correctly in your editor can still be UTF-16-encoded garbage on GitHub).
+
+### Rationale & Strategy
+Asking before building a tag-input widget avoided a wasted implementation if the user actually meant a domain-logic gap — the two interpretations aren't a small variance, they're different files, different risk, different review. Explicitly telling the model to open "every doc and asset," not just source, is what turned up the corrupted `README.md`: a plausible root cause (Windows `Out-File`/`Set-Content` defaulting to UTF-16 in a prior session, flagged in this environment's own PowerShell tool notes) that a code-only audit would never have surfaced, and one that materially matters for a "SaaS product" rating since it's the first thing anyone opening the repo on GitHub sees.
+
