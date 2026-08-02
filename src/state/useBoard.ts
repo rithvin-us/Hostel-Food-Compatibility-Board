@@ -74,7 +74,7 @@ function reducer(state: BoardState, action: Action): BoardState {
 
     case 'addResident':
       return edited(state, {
-        group: [...state.group, { key: newKey(), name: '', diet: 'VEGETARIAN', allergens: [] }],
+        group: [...state.group, { key: newKey(), name: 'New Resident', diet: 'VEGETARIAN', allergens: [] }],
       });
 
     case 'removeResident':
@@ -84,7 +84,7 @@ function reducer(state: BoardState, action: Action): BoardState {
       return edited(state, {
         dishes: [
           ...state.dishes,
-          { key: newKey(), id: '', cafe: '', name: '', diet: 'VEGAN', tags: [], price: '' },
+          { key: newKey(), id: 'D0X', cafe: 'New Cafe', name: 'New Dish', diet: 'VEGAN', tags: [], price: '0' },
         ],
       });
 

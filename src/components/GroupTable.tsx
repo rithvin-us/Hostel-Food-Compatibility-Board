@@ -26,9 +26,9 @@ export function GroupTable({ group, onEdit, onAdd, onRemove, isFlagged }: Props)
       <div className="pane-body">
         <table className="table" aria-label="Group">
           <colgroup>
+            <col style={{ width: '33%' }} />
+            <col style={{ width: '33%' }} />
             <col style={{ width: '34%' }} />
-            <col style={{ width: '30%' }} />
-            <col style={{ width: '36%' }} />
             <col style={{ width: '30px' }} />
           </colgroup>
           <thead>

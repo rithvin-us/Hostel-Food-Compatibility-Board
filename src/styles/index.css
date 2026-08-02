@@ -878,7 +878,7 @@ mark {
 .feast-text h3 {
   margin: 0 0 2px 0;
   font-size: var(--t-lg);
-  font-weight: 700;
+  font-weight: 600;
   color: #ffffff;
 }
 
@@ -912,7 +912,7 @@ mark {
 
 .analytics-card-title {
   font-size: var(--t-sm);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink);
   margin: 0;
   text-transform: uppercase;
@@ -926,7 +926,7 @@ mark {
 
 .harmony-status-chip {
   font-size: var(--t-xs);
-  font-weight: 700;
+  font-weight: 600;
   padding: 2px 8px;
   border-radius: 12px;
   text-transform: uppercase;
@@ -996,14 +996,15 @@ mark {
 .gauge-number {
   font-family: var(--mono);
   font-size: var(--t-lg);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink);
   line-height: 1;
 }
 
 .gauge-sub {
-  font-size: 0.65rem;
-  color: var(--ink-3);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink-2);
   text-transform: uppercase;
   margin-top: 2px;
 }
@@ -1022,7 +1023,7 @@ mark {
 .stat-num {
   font-family: var(--mono);
   font-size: var(--t-xl);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink);
 }
 

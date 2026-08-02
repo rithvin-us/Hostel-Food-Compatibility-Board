@@ -31,9 +31,9 @@ export function DishTable({ dishes, onEdit, onAdd, onRemove, isFlagged }: Props)
           <colgroup>
             <col style={{ width: '8%' }} />
             <col style={{ width: '18%' }} />
-            <col style={{ width: '22%' }} />
-            <col style={{ width: '17%' }} />
-            <col style={{ width: '25%' }} />
+            <col style={{ width: '20%' }} />
+            <col style={{ width: '20%' }} />
+            <col style={{ width: '24%' }} />
             <col style={{ width: '10%' }} />
             <col style={{ width: '30px' }} />
           </colgroup>
