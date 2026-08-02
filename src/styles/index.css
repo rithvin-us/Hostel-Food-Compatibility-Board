@@ -848,9 +848,25 @@ mark {
   .td-evidence {
     display: none;
   }
+  .spectrum-strip {
+    overflow-x: auto;
+  }
+  .spectrum-tick {
+    flex: 0 0 6px;
+  }
+  .harmony-number {
+    font-size: var(--t-xl);
+  }
 }
 
-/* --------------------------------------------------------- analytics panel ---- */
+/* --------------------------------------------------------- analytics panel ----
+ * Deliberately reuses the board's own vocabulary — --pass / --block / --over,
+ * the .chip and .legend / .swatch components, the ● ○ ✓ ✕ glyph set — rather
+ * than a separate palette. Diet and allergen share --block (both are
+ * "content mismatch" failures elsewhere on the board); a diagonal hazard
+ * stripe marks diet as the negotiable one, solid marks allergen as the one
+ * that can't be substituted around.
+ */
 
 .analytics-panel {
   display: flex;
@@ -862,35 +878,92 @@ mark {
 .feast-banner {
   display: flex;
   align-items: center;
-  gap: var(--s4);
-  padding: var(--s4) var(--s5);
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: #ffffff;
+  gap: var(--s3);
+  padding: var(--s3) var(--s4);
+  background: var(--pass-bg);
+  border: 1px solid var(--pass);
   border-radius: var(--radius);
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
 }
 
-.feast-icon {
-  font-size: 2.2rem;
+.feast-mark {
+  font-size: var(--t-xl);
+  font-weight: 700;
   line-height: 1;
+  color: var(--pass);
+  flex-shrink: 0;
 }
 
-.feast-text h3 {
-  margin: 0 0 2px 0;
-  font-size: var(--t-lg);
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.feast-text p {
+.feast-banner p {
   margin: 0;
   font-size: var(--t-sm);
-  opacity: 0.95;
+  color: var(--ink-2);
+}
+
+.feast-banner strong {
+  color: var(--pass);
+}
+
+/* ---- Compatibility spectrum: one tick per dish, in table order, so a
+   glance here tells you where to look in the verdict matrix below. ---- */
+
+.spectrum-block {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--s4);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+
+.spectrum-strip {
+  display: flex;
+  gap: 2px;
+  height: 26px;
+}
+
+.spectrum-tick {
+  flex: 1 1 0;
+  min-width: 3px;
+  border-radius: 1px;
+  background: var(--line-strong);
+}
+
+.tick-pass {
+  background: var(--pass);
+}
+
+.tick-diet {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--block) 0 4px,
+    rgba(255, 255, 255, 0.45) 4px 8px
+  );
+}
+
+.tick-allergen {
+  background: var(--block);
+}
+
+.tick-budget {
+  background: var(--over);
+}
+
+.spectrum-legend {
+  padding: 0;
+  border-top: none;
+  background: none;
+}
+
+.swatch-hatch {
+  background-image: repeating-linear-gradient(45deg, var(--block) 0 2px, var(--surface) 2px 4px);
+  border: 1px solid var(--line-strong);
 }
 
 .analytics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: var(--s4);
 }
 
@@ -903,11 +976,19 @@ mark {
   display: flex;
   flex-direction: column;
   gap: var(--s3);
-  transition: transform 150ms var(--ease), box-shadow 150ms var(--ease);
+  transition: box-shadow 150ms var(--ease);
 }
 
 .analytics-card:hover {
   box-shadow: var(--shadow);
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  flex-wrap: wrap;
 }
 
 .analytics-card-title {
@@ -924,233 +1005,152 @@ mark {
   color: var(--ink-3);
 }
 
-.harmony-status-chip {
-  font-size: var(--t-xs);
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.status-feast {
-  background: #d1fae5;
-  color: #065f46;
-}
-
-.status-high {
-  background: var(--pass-bg);
-  color: var(--pass);
-}
-
-.status-moderate {
-  background: var(--over-bg);
-  color: var(--over);
-}
-
-.status-low {
-  background: var(--block-bg);
-  color: var(--block);
-}
-
-.harmony-body {
-  display: flex;
-  align-items: center;
-  gap: var(--s5);
-}
-
-.gauge-container {
-  position: relative;
-  width: 90px;
-  height: 90px;
-  flex-shrink: 0;
-}
-
-.gauge-svg {
-  width: 100%;
-  height: 100%;
-}
-
-.gauge-bg {
-  fill: none;
-  stroke: var(--surface-sunken);
-}
-
-.gauge-fill {
-  fill: none;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 600ms var(--ease);
-}
-
-.gauge-value {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.gauge-number {
-  font-family: var(--mono);
-  font-size: var(--t-lg);
-  font-weight: 600;
-  color: var(--ink);
-  line-height: 1;
-}
-
-.gauge-sub {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--ink-2);
-  text-transform: uppercase;
-  margin-top: 2px;
-}
-
-.harmony-stats {
-  display: flex;
-  align-items: center;
-  gap: var(--s2);
-}
-
-.stat-pill {
-  display: flex;
-  flex-direction: column;
-}
-
-.stat-num {
-  font-family: var(--mono);
-  font-size: var(--t-xl);
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.stat-lbl {
-  font-size: var(--t-xs);
+.analytics-empty {
+  margin: 0;
+  font-size: var(--t-sm);
   color: var(--ink-3);
 }
 
-.stat-divider {
-  font-size: var(--t-xl);
-  color: var(--line-strong);
+.analytics-insight {
+  margin: 0;
+  font-size: var(--t-sm);
+  color: var(--ink-2);
 }
 
-/* Breakdown bars */
-.bars-container {
+.analytics-insight strong {
+  color: var(--ink);
+}
+
+/* Group harmony meter — a linear track with ticks at the same 30 / 60
+   thresholds that decide the status label, so the label is never a black
+   box: you can see exactly how close the score is to the next one. */
+.harmony-readout {
   display: flex;
-  flex-direction: column;
-  gap: var(--s3);
+  align-items: baseline;
+  gap: var(--s2);
+  flex-wrap: wrap;
 }
 
-.bar-group {
+.harmony-number {
+  font-family: var(--mono);
+  font-size: var(--t-2xl);
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.meter {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.bar-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: var(--t-xs);
-  color: var(--ink-2);
-}
-
-.bar-val {
-  font-family: var(--mono);
-  font-weight: 600;
-}
-
-.bar-track {
+.meter-track {
+  position: relative;
   height: 8px;
   background: var(--surface-sunken);
   border-radius: 4px;
   overflow: hidden;
 }
 
-.bar-fill {
+.meter-fill {
   height: 100%;
   border-radius: 4px;
   transition: width 400ms var(--ease);
 }
 
-.fill-diet {
-  background: #3b82f6;
+.meter-tick {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.6);
 }
 
-.fill-allergen {
-  background: #ef4444;
+.meter-scale {
+  position: relative;
+  height: 14px;
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--ink-3);
 }
 
-.fill-budget {
-  background: #f59e0b;
+.meter-scale span {
+  position: absolute;
 }
 
-/* Friction card */
-.friction-list {
+/* Stacked bar — shared by the root-cause breakdown and each resident row,
+   so "share of a whole" always reads the same way on this board. */
+.stacked-bar {
+  display: flex;
+  height: 10px;
+  background: var(--surface-sunken);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stack-seg {
+  flex: 0 0 auto;
+  height: 100%;
+  transition: width 400ms var(--ease);
+}
+
+.seg-diet {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--block) 0 4px,
+    rgba(255, 255, 255, 0.45) 4px 8px
+  );
+}
+
+.seg-allergen {
+  background: var(--block);
+}
+
+.seg-budget {
+  background: var(--over);
+}
+
+/* Resident constraints */
+.resident-bars {
   display: flex;
   flex-direction: column;
-  gap: var(--s2);
+  gap: var(--s3);
 }
 
-.friction-row {
+.resident-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.resident-row-head {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 4px 0;
-  border-bottom: 1px dashed var(--line);
-}
-
-.friction-row:last-child {
-  border-bottom: none;
-}
-
-.friction-name {
   font-size: var(--t-sm);
+}
+
+.resident-name {
   font-weight: 600;
   color: var(--ink);
 }
 
-.friction-badges {
-  display: flex;
-  gap: 4px;
-}
-
-.friction-badge {
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 2px 6px;
-  border-radius: 4px;
+.resident-count {
   font-family: var(--mono);
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
 }
 
-.badge-diet {
-  background: #dbeafe;
-  color: #1e40af;
-}
-
-.badge-allergen {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-.badge-clean {
-  background: #d1fae5;
-  color: #065f46;
-}
-
-/* Unlocker card */
+/* Next unlock */
 .unlocker-card {
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-  border-color: #bae6fd;
+  border-left: 3px solid var(--pass);
 }
 
 .unlocker-msg {
   margin: 0;
   font-size: var(--t-sm);
-  color: #0369a1;
-  font-weight: 500;
-  line-height: 1.4;
+  color: var(--ink-2);
+  line-height: 1.5;
 }
 

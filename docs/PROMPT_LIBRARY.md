@@ -119,3 +119,14 @@ Benchmarking the implementation against an explicit design system and coding sta
 ### Rationale & Strategy
 Layering analytics onto a strict contract verification system transforms standard tabular output into actionable intelligence without risking compliance drift. Enforcing zero external charting dependencies keeps the engine lightweight and 100% headlessly unit-testable.
 
+---
+
+## 11. Design-System-Consistent Analytics Visualization Refactor
+
+### Refined Prompt
+
+> The current analytics visuals (circular SVG gauge, gradient banners, ad hoc hex-coded bars and badges) read as a generic, disconnected dashboard bolted onto the board rather than an extension of it. Redesign every analytics visualization to derive exclusively from the existing design token system (`tokens.css`) and the visual vocabulary the verdict matrix already established (`--pass`/`--block`/`--over`, `.chip`, `.legend`/`.swatch`, the ● ○ ✓ ✕ glyph set) — introduce no new hex colors, gradients, or emoji. Increase the analytical depth of the panel, not just its polish: every visualization must expose a fact the current version hides — e.g. a per-dish overview that mirrors the matrix's row order, a harmony meter that shows the actual thresholds behind its status label, and a synthesized natural-language insight (not just raw numbers) identifying the board's tightest constraint. Verify the result is fully usable from ~320px mobile through tablet and desktop widths with no overflow, clipping, or illegible elements, and confirm via `tsc -b` and the full test suite that no domain contract, exclusion string, or existing test is touched.
+
+### Rationale & Strategy
+Naming the failure mode precisely ("a generic dashboard bolted onto the board" rather than "make it prettier") steers the model toward *consistency* with the existing system instead of the default AI-dashboard template — donut gauge, gradient hero banner, arbitrary categorical palette — it would otherwise reach for. Requiring that every chart "expose a fact the current version hides" forces new information architecture instead of a re-skin, and pinning the verification steps (`tsc -b`, full suite, responsive range) keeps a purely visual refactor from silently drifting into a contract or behavior change.
+

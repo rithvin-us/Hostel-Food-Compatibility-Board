@@ -4,6 +4,26 @@ All notable changes to the Hostel Food Compatibility Board project are documente
 
 ---
 
+## [1.2.0] - 2026-08-02
+
+### Changed
+- **Analytics Panel Visual Redesign (`src/components/AnalyticsPanel.tsx`, `src/styles/index.css`)**:
+  - Replaced the SVG circular gauge, gradient banners, and ad hoc hex-coded bars/badges with visuals built entirely from the board's existing design tokens (`--pass` / `--block` / `--over`) and components (`.chip`, `.legend` / `.swatch`), so the analytics panel reads as part of the same instrument as the verdict matrix rather than a dashboard bolted on top of it.
+  - Added **Compatibility Spectrum**: a full-width strip with one tick per dish, in the same order as the verdict matrix rows below it, so the aggregate view and the row-level detail stay visually correlated.
+  - Replaced the circular gauge with a **linear Harmony Meter** that marks the 30 / 60 thresholds behind the status label directly on the track, so "Moderate Friction" vs. "High Harmony" is never a black box.
+  - Replaced three separate progress bars with a single **stacked root-cause bar**. Diet and allergen share the board's existing `--block` red (both are "content mismatch" failures elsewhere on the board), but diet renders as a diagonal hazard stripe — negotiable — versus allergen's solid fill — non-negotiable — turning the fill pattern itself into information rather than decoration.
+  - Replaced resident friction badges with ranked, magnitude-proportional **bar chart rows**, plus an auto-generated insight line naming the board's tightest constraint (e.g. "Asha clears the fewest dishes — 2 exclusions").
+  - Restyled the Universal Feast banner and Next Unlock card to use the board's own pass-state styling instead of a gradient/emoji marketing banner.
+  - Verified fully usable from ~320px mobile through tablet and desktop widths, including a dedicated narrow-viewport rule so the spectrum strip scrolls instead of collapsing to hairlines on boards with many dishes.
+- **Prompt Library Expansion (`docs/PROMPT_LIBRARY.md`)**: Added Section 11 (*Design-System-Consistent Analytics Visualization Refactor*).
+
+### Maintained & Verified
+- **Zero domain changes**: `src/domain/analytics.ts` is untouched — the redesign consumes the same pure functions and computed values as before.
+- **Zero third-party chart dependencies**: all visuals remain native CSS/DOM, no SVG gauge machinery.
+- **Test Suite**: 128/128 tests passing, `tsc -b` clean.
+
+---
+
 ## [1.1.0] - 2026-08-02
 
 ### Added
@@ -72,6 +92,38 @@ The refined interface introduces an interactive Analytics & Insights layer above
 |  RESIDENT CONSTRAINTS                             |  💡 SMART RECOMMENDATION      |
 |  Asha:  [Diet: 2]                                 |  Increasing budget by ₹10    |
 |  Dev:   [Allergen: 1]                             |  unlocks Tomato Pasta!        |
++---------------------------------------------------+-------------------------------+
+```
+
+---
+
+### 3. Design-System-Unified Analytics (Version 1.2.0)
+
+Version 1.1.0's analytics layer visualized the right data with the wrong visual language — a circular SVG gauge, gradient banners, and an ad hoc blue/red/amber palette unrelated to the `--pass` / `--block` / `--over` tokens the rest of the board already uses. Version 1.2.0 keeps every metric but rebuilds the visuals from the board's own vocabulary, and adds a per-dish overview and a synthesized insight line that 1.1.0 didn't have:
+- **Compatibility Spectrum**: one tick per dish, ordered exactly as the Verdict Matrix rows below it.
+- **Linear Harmony Meter**: replaces the donut with a track marked at the 30 / 60 status thresholds, so the label is derived visibly instead of asserted.
+- **Stacked Root-Cause Bar**: one bar instead of three, diet marked with a diagonal hazard stripe (negotiable) against allergen's solid fill (non-negotiable) — same `--block` red the rest of the board already assigns to both.
+- **Ranked Resident Bars**: magnitude-proportional, with an auto-generated insight line naming the tightest constraint.
+
+#### Refined UI Visual Layout
+```
++-----------------------------------------------------------------------------------+
+| ✓ Universal Feast. All 5 dishes clear every resident.                             |
++-----------------------------------------------------------------------------------+
+| COMPATIBILITY SPECTRUM                     2 of 5 dishes compatible, in table order|
+| [pass][diet][pass][allergen][budget]                                              |
+| ■ passes   ▨ diet   ■ allergen   ■ over budget                                    |
++---------------------------------------------------+-------------------------------+
+|  GROUP HARMONY                  [Moderate Friction]|  EXCLUSION ROOT CAUSE         |
+|  40%   2 of 5 dishes compatible                    |  [▨▨▨▨|████|░░]  5 reasons    |
+|  [====----------------] 30    60    100            |  diet 40% · allergen 40% ·    |
+|                                                     |  budget 20%                   |
++---------------------------------------------------+-------------------------------+
+|  RESIDENT CONSTRAINTS                              |  NEXT UNLOCK                  |
+|  Asha clears the fewest dishes — 2 exclusions.     |  Increasing budget by ₹10      |
+|  Asha  [▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨] 2                    |  (to ₹160) unlocks 1 dish:    |
+|  Dev   [██████████] 1                              |  Tomato Pasta.                 |
+|  Mira  ✓ clear                                     |                                |
 +---------------------------------------------------+-------------------------------+
 ```
 
