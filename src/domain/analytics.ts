@@ -192,8 +192,8 @@ export function computeSmartUnlocker(
 
   if (allergenOnlyDishes.length > 0) {
     const dish = allergenOnlyDishes[0];
-    if (dish && dish.reasons.length > 0) {
-      const reason = dish.reasons[0];
+    const reason = dish?.reasons[0];
+    if (dish && reason) {
       const parts = reason.split(':');
       const resident = parts[1] ?? '';
       const tag = parts[2] ?? '';
