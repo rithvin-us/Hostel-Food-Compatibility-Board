@@ -1,5 +1,6 @@
 import { AnalyticsPanel } from './components/AnalyticsPanel';
 import { BoardHeader } from './components/BoardHeader';
+import { DebugQueryPanel } from './components/DebugQueryPanel';
 import { DishTable } from './components/DishTable';
 import { GroupTable } from './components/GroupTable';
 import { ResultPanel } from './components/ResultPanel';
@@ -66,27 +67,31 @@ export default function App() {
 
         {report !== null && report.status === 'OK' && (
           <>
-            <section className="panel enter">
-              <div className="panel-head">
-                <h2 className="panel-title">Analytics & Group Insights</h2>
-              </div>
-              <AnalyticsPanel
-                verdicts={report.verdicts}
-                residents={residentNames}
-                budget={report.budget}
-              />
-            </section>
+            {/* Matrix keeps the wide column so the compatibility table stays fully
+                visible; analytics rides alongside as a sidebar, never on top of it. */}
+            <div className="board-columns enter">
+              <section className="panel board-main">
+                <div className="panel-head">
+                  <h2 className="panel-title">Verdict Matrix</h2>
+                </div>
+                <VerdictMatrix
+                  verdicts={report.verdicts}
+                  residents={residentNames}
+                  budget={report.budget}
+                />
+              </section>
 
-            <section className="panel enter">
-              <div className="panel-head">
-                <h2 className="panel-title">Verdict Matrix</h2>
-              </div>
-              <VerdictMatrix
-                verdicts={report.verdicts}
-                residents={residentNames}
-                budget={report.budget}
-              />
-            </section>
+              <aside className="panel board-side">
+                <div className="panel-head">
+                  <h2 className="panel-title">Analytics & Group Insights</h2>
+                </div>
+                <AnalyticsPanel
+                  verdicts={report.verdicts}
+                  residents={residentNames}
+                  budget={report.budget}
+                />
+              </aside>
+            </div>
 
             <section className="panel">
               <div className="panel-head">
@@ -101,6 +106,10 @@ export default function App() {
             </section>
           </>
         )}
+
+        {/* Debug-only: not part of the resident-facing board. Collapsed until
+            clicked, so it never competes with the compatibility board for attention. */}
+        <DebugQueryPanel group={state.group} dishes={state.dishes} budget={state.budget} />
       </main>
     </>
   );

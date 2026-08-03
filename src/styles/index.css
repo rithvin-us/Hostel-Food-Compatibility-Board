@@ -684,6 +684,36 @@ tr:hover .btn-remove,
   border-radius: 1px;
 }
 
+/* ------------------------------------------------------- board columns -- *
+ * The matrix keeps the wide, dominant column so the compatibility table is
+ * always fully in view; analytics rides beside it as a sidebar rather than
+ * stacking above and pushing the table below the fold.                     */
+
+.board-columns {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s5);
+}
+
+.board-main {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.board-side {
+  flex: 0 0 22rem;
+  min-width: 0;
+  position: sticky;
+  top: calc(56px + var(--s5));
+  max-height: calc(100vh - 56px - var(--s6));
+  overflow-y: auto;
+}
+
+.board-side .analytics-panel {
+  padding: var(--s4);
+  margin-bottom: 0;
+}
+
 /* ------------------------------------------------------------ result ---- */
 
 .result {
@@ -871,6 +901,15 @@ mark {
   .inputs,
   .result {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .board-columns {
+    flex-direction: column;
+  }
+  .board-side {
+    flex-basis: auto;
+    width: 100%;
+    position: static;
+    max-height: none;
   }
   .inputs-pane + .inputs-pane {
     border-left: none;
@@ -1236,5 +1275,44 @@ mark {
   font-size: var(--t-sm);
   color: var(--ink-2);
   line-height: 1.5;
+}
+
+/* -------------------------------------------------------- debug panel --- *
+ * Dev-only escape hatch, deliberately quiet: a resident checking dinner
+ * should never notice it, so no card chrome, no shadow, small type — just a
+ * toggle until someone goes looking for it.                                */
+
+.debug-panel {
+  margin-top: var(--s2);
+}
+
+.debug-toggle {
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: none;
+  padding: 3px var(--s2);
+  font-size: var(--t-xs);
+  color: var(--ink-3);
+  cursor: pointer;
+}
+
+.debug-toggle:hover {
+  color: var(--ink-2);
+  border-color: var(--ink-3);
+}
+
+.debug-sql {
+  margin: var(--s2) 0 0;
+  padding: var(--s3);
+  background: var(--surface-sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  line-height: 1.5;
+  color: var(--ink-2);
+  overflow-x: auto;
+  max-height: 20rem;
+  overflow-y: auto;
 }
 
