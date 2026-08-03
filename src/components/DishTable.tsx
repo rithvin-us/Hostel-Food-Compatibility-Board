@@ -46,7 +46,7 @@ export function DishTable({ dishes, onEdit, onAdd, onRemove, isFlagged }: Props)
               <th scope="col">Class</th>
               <th scope="col">Ingredients</th>
               <th scope="col" className="th-num">
-                ₹
+                Price (₹)
               </th>
               <th scope="col">
                 <span className="sr-only">Remove</span>

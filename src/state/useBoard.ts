@@ -72,21 +72,39 @@ function reducer(state: BoardState, action: Action): BoardState {
         ),
       });
 
-    case 'addResident':
+    case 'addResident': {
+      let nextName = `RESIDENT ${state.group.length + 1}`;
+      const last = state.group.length > 0 ? state.group[state.group.length - 1] : undefined;
+      if (last) {
+        const match = last.name.match(/(\d+)$/);
+        if (match && match[1]) {
+          nextName = `RESIDENT ${parseInt(match[1], 10) + 1}`;
+        }
+      }
       return edited(state, {
-        group: [...state.group, { key: newKey(), name: 'NEW RESIDENT', diet: 'VEGETARIAN', allergens: [] }],
+        group: [...state.group, { key: newKey(), name: nextName, diet: 'VEGETARIAN', allergens: [] }],
       });
+    }
 
     case 'removeResident':
       return edited(state, { group: state.group.filter((r) => r.key !== action.key) });
 
-    case 'addDish':
+    case 'addDish': {
+      let nextId = `D${(state.dishes.length + 1).toString().padStart(2, '0')}`;
+      const last = state.dishes.length > 0 ? state.dishes[state.dishes.length - 1] : undefined;
+      if (last) {
+        const match = last.id.match(/^D(\d+)$/);
+        if (match && match[1]) {
+          nextId = `D${(parseInt(match[1], 10) + 1).toString().padStart(2, '0')}`;
+        }
+      }
       return edited(state, {
         dishes: [
           ...state.dishes,
-          { key: newKey(), id: 'D0X', cafe: 'NEW CAFE', name: 'NEW DISH', diet: 'VEGAN', tags: [], price: '0' },
+          { key: newKey(), id: nextId, cafe: 'NEW CAFE', name: 'NEW DISH', diet: 'VEGAN', tags: [], price: '0' },
         ],
       });
+    }
 
     case 'removeDish':
       return edited(state, { dishes: state.dishes.filter((d) => d.key !== action.key) });
