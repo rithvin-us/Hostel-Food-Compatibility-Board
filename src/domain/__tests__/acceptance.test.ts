@@ -27,16 +27,16 @@ describe('AC1 — load the built-in group and dishes in one action', () => {
 });
 
 describe('AC2 — contracted exclusion reasons, and the budget boundary', () => {
-  it('D03 Paneer Wrap: DIET:Asha then ALLERGEN:Mira:MILK', () => {
-    expect(reasonsFor(run(), 'D03')).toEqual(['DIET:Asha', 'ALLERGEN:Mira:MILK']);
+  it('D03 Paneer Wrap: DIET:ASHA then ALLERGEN:MIRA:MILK', () => {
+    expect(reasonsFor(run(), 'D03')).toEqual(['DIET:ASHA', 'ALLERGEN:MIRA:MILK']);
   });
 
-  it('D04 Peanut Noodles: ALLERGEN:Dev:PEANUT', () => {
-    expect(reasonsFor(run(), 'D04')).toEqual(['ALLERGEN:Dev:PEANUT']);
+  it('D04 Peanut Noodles: ALLERGEN:DEV:PEANUT', () => {
+    expect(reasonsFor(run(), 'D04')).toEqual(['ALLERGEN:DEV:PEANUT']);
   });
 
-  it('D05 Egg Sandwich: DIET:Asha then DIET:Dev', () => {
-    expect(reasonsFor(run(), 'D05')).toEqual(['DIET:Asha', 'DIET:Dev']);
+  it('D05 Egg Sandwich: DIET:ASHA then DIET:DEV', () => {
+    expect(reasonsFor(run(), 'D05')).toEqual(['DIET:ASHA', 'DIET:DEV']);
   });
 
   it('D02 at ₹150 passes the ₹150 budget (<=, not <)', () => {
@@ -126,11 +126,11 @@ describe('optional — evidence data for the diet, allergen and budget checks', 
   it('exposes a per-resident cell for every dish without changing the result', () => {
     const d03 = ok(run()).verdicts.find((v) => v.dish.id === 'D03')!;
     expect(d03.cells).toEqual([
-      { resident: 'Asha', dietOk: false, allergenHits: [] },
-      { resident: 'Dev', dietOk: true, allergenHits: [] },
-      { resident: 'Mira', dietOk: true, allergenHits: ['MILK'] },
+      { resident: 'ASHA', dietOk: false, allergenHits: [] },
+      { resident: 'DEV', dietOk: true, allergenHits: [] },
+      { resident: 'MIRA', dietOk: true, allergenHits: ['MILK'] },
     ]);
     expect(d03.budgetOk).toBe(true);
-    expect(d03.reasons).toEqual(['DIET:Asha', 'ALLERGEN:Mira:MILK']);
+    expect(d03.reasons).toEqual(['DIET:ASHA', 'ALLERGEN:MIRA:MILK']);
   });
 });

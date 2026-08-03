@@ -46,11 +46,11 @@ describe('AC2 — the screen prints the contracted exclusion reasons', () => {
     const { user } = setup();
     await user.click(check());
 
-    expect(within(rowFor('D03')).getByText('DIET:Asha')).toBeTruthy();
-    expect(within(rowFor('D03')).getByText('ALLERGEN:Mira:MILK')).toBeTruthy();
-    expect(within(rowFor('D04')).getByText('ALLERGEN:Dev:PEANUT')).toBeTruthy();
-    expect(within(rowFor('D05')).getAllByText('DIET:Asha')).toHaveLength(1);
-    expect(within(rowFor('D05')).getByText('DIET:Dev')).toBeTruthy();
+    expect(within(rowFor('D03')).getByText('DIET:ASHA')).toBeTruthy();
+    expect(within(rowFor('D03')).getByText('ALLERGEN:MIRA:MILK')).toBeTruthy();
+    expect(within(rowFor('D04')).getByText('ALLERGEN:DEV:PEANUT')).toBeTruthy();
+    expect(within(rowFor('D05')).getAllByText('DIET:ASHA')).toHaveLength(1);
+    expect(within(rowFor('D05')).getByText('DIET:DEV')).toBeTruthy();
   });
 
   it('marks D02 as sitting exactly on the ₹150 boundary', async () => {

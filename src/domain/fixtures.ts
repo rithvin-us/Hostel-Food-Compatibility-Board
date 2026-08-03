@@ -8,9 +8,9 @@ export const DEFAULT_BUDGET = '150';
  * Resident order is contractual: it drives the order of DIET/ALLERGEN reasons.
  */
 export const BUILT_IN_GROUP: ResidentInput[] = [
-  { key: 'r1', name: 'Asha', diet: 'VEGAN', allergens: [] },
-  { key: 'r2', name: 'Dev', diet: 'VEGETARIAN', allergens: ['PEANUT'] },
-  { key: 'r3', name: 'Mira', diet: 'NO_RESTRICTION', allergens: ['MILK'] },
+  { key: 'r1', name: 'ASHA', diet: 'VEGAN', allergens: [] },
+  { key: 'r2', name: 'DEV', diet: 'VEGETARIAN', allergens: ['PEANUT'] },
+  { key: 'r3', name: 'MIRA', diet: 'NO_RESTRICTION', allergens: ['MILK'] },
 ];
 
 /**
@@ -21,8 +21,8 @@ export const BUILT_IN_DISHES: DishInput[] = [
   {
     key: 'd1',
     id: 'D01',
-    cafe: 'Hostel Cafe',
-    name: 'Lentil Rice Bowl',
+    cafe: 'HOSTEL CAFE',
+    name: 'LENTIL RICE BOWL',
     diet: 'VEGAN',
     tags: ['LENTIL', 'RICE', 'SPINACH'],
     price: '110',
@@ -30,8 +30,8 @@ export const BUILT_IN_DISHES: DishInput[] = [
   {
     key: 'd2',
     id: 'D02',
-    cafe: 'Library Cafe',
-    name: 'Tomato Pasta',
+    cafe: 'LIBRARY CAFE',
+    name: 'TOMATO PASTA',
     diet: 'VEGAN',
     tags: ['WHEAT', 'TOMATO'],
     price: '150',
@@ -39,8 +39,8 @@ export const BUILT_IN_DISHES: DishInput[] = [
   {
     key: 'd3',
     id: 'D03',
-    cafe: 'Hostel Cafe',
-    name: 'Paneer Wrap',
+    cafe: 'HOSTEL CAFE',
+    name: 'PANEER WRAP',
     diet: 'VEGETARIAN',
     tags: ['MILK', 'WHEAT'],
     price: '140',
@@ -48,8 +48,8 @@ export const BUILT_IN_DISHES: DishInput[] = [
   {
     key: 'd4',
     id: 'D04',
-    cafe: 'East Cafe',
-    name: 'Peanut Noodles',
+    cafe: 'EAST CAFE',
+    name: 'PEANUT NOODLES',
     diet: 'VEGAN',
     tags: ['PEANUT', 'WHEAT'],
     price: '130',
@@ -57,8 +57,8 @@ export const BUILT_IN_DISHES: DishInput[] = [
   {
     key: 'd5',
     id: 'D05',
-    cafe: 'Library Cafe',
-    name: 'Egg Sandwich',
+    cafe: 'LIBRARY CAFE',
+    name: 'EGG SANDWICH',
     diet: 'NON_VEGETARIAN',
     tags: ['EGG', 'WHEAT'],
     price: '100',

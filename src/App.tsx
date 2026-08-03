@@ -70,16 +70,30 @@ export default function App() {
             {/* Matrix keeps the wide column so the compatibility table stays fully
                 visible; analytics rides alongside as a sidebar, never on top of it. */}
             <div className="board-columns enter">
-              <section className="panel board-main">
-                <div className="panel-head">
-                  <h2 className="panel-title">Verdict Matrix</h2>
-                </div>
-                <VerdictMatrix
-                  verdicts={report.verdicts}
-                  residents={residentNames}
-                  budget={report.budget}
-                />
-              </section>
+              <div className="board-main">
+                <section className="panel">
+                  <div className="panel-head">
+                    <h2 className="panel-title">Verdict Matrix</h2>
+                  </div>
+                  <VerdictMatrix
+                    verdicts={report.verdicts}
+                    residents={residentNames}
+                    budget={report.budget}
+                  />
+                </section>
+
+                <section className="panel">
+                  <div className="panel-head">
+                    <h2 className="panel-title">Result</h2>
+                  </div>
+                  <ResultPanel
+                    compatibleCount={report.compatibleCount}
+                    filtered={filtered}
+                    query={state.query}
+                    onQuery={actions.setQuery}
+                  />
+                </section>
+              </div>
 
               <aside className="panel board-side">
                 <div className="panel-head">
@@ -92,18 +106,6 @@ export default function App() {
                 />
               </aside>
             </div>
-
-            <section className="panel">
-              <div className="panel-head">
-                <h2 className="panel-title">Result</h2>
-              </div>
-              <ResultPanel
-                compatibleCount={report.compatibleCount}
-                filtered={filtered}
-                query={state.query}
-                onQuery={actions.setQuery}
-              />
-            </section>
           </>
         )}
 

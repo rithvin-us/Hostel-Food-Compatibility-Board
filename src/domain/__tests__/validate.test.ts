@@ -38,22 +38,22 @@ describe('budget validation', () => {
 
 describe('group table validation', () => {
   it('rejects an empty resident name and falls back to a positional row label', () => {
-    const group = builtInGroup().map((r) => (r.name === 'Dev' ? { ...r, name: '' } : r));
+    const group = builtInGroup().map((r) => (r.name === 'DEV' ? { ...r, name: '' } : r));
     const report = err(run({ group }));
     expectField(report.errors, 'group', 'row 2', 'name');
   });
 
   it('rejects a whitespace-only resident name', () => {
-    const group = builtInGroup().map((r) => (r.name === 'Asha' ? { ...r, name: '   ' } : r));
+    const group = builtInGroup().map((r) => (r.name === 'ASHA' ? { ...r, name: '   ' } : r));
     expectField(err(run({ group })).errors, 'group', 'row 1', 'name');
   });
 
   it('rejects an unknown diet class', () => {
-    expectField(err(run({ group: groupWith('Asha', { diet: 'PESCATARIAN' }) })).errors, 'group', 'Asha', 'diet');
+    expectField(err(run({ group: groupWith('ASHA', { diet: 'PESCATARIAN' }) })).errors, 'group', 'ASHA', 'diet');
   });
 
   it('rejects a blank allergen tag', () => {
-    expectField(err(run({ group: groupWith('Dev', { allergens: ['PEANUT', ''] }) })).errors, 'group', 'Dev', 'allergens');
+    expectField(err(run({ group: groupWith('DEV', { allergens: ['PEANUT', ''] }) })).errors, 'group', 'DEV', 'allergens');
   });
 
   it('rejects an empty group', () => {
@@ -61,7 +61,7 @@ describe('group table validation', () => {
   });
 
   it('accepts NO_RESTRICTION for a resident', () => {
-    expect(run({ group: groupWith('Asha', { diet: 'NO_RESTRICTION' }) }).status).toBe('OK');
+    expect(run({ group: groupWith('ASHA', { diet: 'NO_RESTRICTION' }) }).status).toBe('OK');
   });
 });
 

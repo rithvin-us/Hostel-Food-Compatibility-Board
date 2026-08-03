@@ -48,7 +48,7 @@ describe('normalization', () => {
 
   it('accepts messy casing and spacing end to end', () => {
     const messy = dishesWith('D03', { diet: '  vegetarian ', tags: [' milk ', 'Wheat'] });
-    expect(reasonsFor(run({ dishes: messy }), 'D03')).toEqual(['DIET:Asha', 'ALLERGEN:Mira:MILK']);
+    expect(reasonsFor(run({ dishes: messy }), 'D03')).toEqual(['DIET:ASHA', 'ALLERGEN:MIRA:MILK']);
   });
 });
 
@@ -153,48 +153,48 @@ describe('reason ordering', () => {
   it('emits the diet reason before allergen reasons for the same resident', () => {
     const verdict = judgeDish(
       dish({ diet: 'NON_VEGETARIAN', tags: ['EGG', 'MILK'] }),
-      [resident({ name: 'Asha', diet: 'VEGAN', allergens: ['MILK', 'EGG'] })],
+      [resident({ name: 'ASHA', diet: 'VEGAN', allergens: ['MILK', 'EGG'] })],
       500,
     );
-    expect(verdict.reasons).toEqual(['DIET:Asha', 'ALLERGEN:Asha:EGG', 'ALLERGEN:Asha:MILK']);
+    expect(verdict.reasons).toEqual(['DIET:ASHA', 'ALLERGEN:ASHA:EGG', 'ALLERGEN:ASHA:MILK']);
   });
 
   it('orders residents by the group table, not alphabetically', () => {
     const verdict = judgeDish(
       dish({ diet: 'NON_VEGETARIAN' }),
-      [resident({ name: 'Zoya', diet: 'VEGAN' }), resident({ name: 'Amit', diet: 'VEGETARIAN' })],
+      [resident({ name: 'ZOYA', diet: 'VEGAN' }), resident({ name: 'AMIT', diet: 'VEGETARIAN' })],
       500,
     );
-    expect(verdict.reasons).toEqual(['DIET:Zoya', 'DIET:Amit']);
+    expect(verdict.reasons).toEqual(['DIET:ZOYA', 'DIET:AMIT']);
   });
 
   it('follows a reordered group table', () => {
     const group = [
-      { key: 'a', name: 'Dev', diet: 'VEGETARIAN', allergens: ['PEANUT'] },
-      { key: 'b', name: 'Asha', diet: 'VEGAN', allergens: [] },
-      { key: 'c', name: 'Mira', diet: 'NO_RESTRICTION', allergens: ['MILK'] },
+      { key: 'a', name: 'DEV', diet: 'VEGETARIAN', allergens: ['PEANUT'] },
+      { key: 'b', name: 'ASHA', diet: 'VEGAN', allergens: [] },
+      { key: 'c', name: 'MIRA', diet: 'NO_RESTRICTION', allergens: ['MILK'] },
     ];
-    expect(reasonsFor(run({ group }), 'D05')).toEqual(['DIET:Dev', 'DIET:Asha']);
+    expect(reasonsFor(run({ group }), 'D05')).toEqual(['DIET:DEV', 'DIET:ASHA']);
   });
 
   it('puts OVER_BUDGET last, after every diet and allergen reason', () => {
     const verdict = judgeDish(
       dish({ diet: 'NON_VEGETARIAN', tags: ['EGG'], price: 900 }),
-      [resident({ name: 'Asha', diet: 'VEGAN', allergens: ['EGG'] })],
+      [resident({ name: 'ASHA', diet: 'VEGAN', allergens: ['EGG'] })],
       150,
     );
-    expect(verdict.reasons).toEqual(['DIET:Asha', 'ALLERGEN:Asha:EGG', 'OVER_BUDGET']);
+    expect(verdict.reasons).toEqual(['DIET:ASHA', 'ALLERGEN:ASHA:EGG', 'OVER_BUDGET']);
     expect(verdict.reasons.at(-1)).toBe('OVER_BUDGET');
   });
 
   it('emits one reason per resident when two residents share an allergen', () => {
-    const group = groupWith('Asha', { diet: 'NO_RESTRICTION', allergens: ['WHEAT'] });
+    const group = groupWith('ASHA', { diet: 'NO_RESTRICTION', allergens: ['WHEAT'] });
     const withWheatAllergyForMira = group.map((r) =>
-      r.name === 'Mira' ? { ...r, allergens: ['WHEAT'] } : r,
+      r.name === 'MIRA' ? { ...r, allergens: ['WHEAT'] } : r,
     );
     expect(reasonsFor(run({ group: withWheatAllergyForMira }), 'D02')).toEqual([
-      'ALLERGEN:Asha:WHEAT',
-      'ALLERGEN:Mira:WHEAT',
+      'ALLERGEN:ASHA:WHEAT',
+      'ALLERGEN:MIRA:WHEAT',
     ]);
   });
 

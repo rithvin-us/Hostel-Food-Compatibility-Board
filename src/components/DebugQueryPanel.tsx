@@ -97,8 +97,8 @@ function compatibilitySelectSql(budget: string): string {
     '  AND NOT EXISTS (',
     '    SELECT 1 FROM residents r',
     '    WHERE EXISTS (',
-    "      SELECT 1 FROM UNNEST(string_to_array(d.tags, ',')) AS tag",
-    "      WHERE tag IN (SELECT UNNEST(string_to_array(r.allergens, ',')))",
+    "      SELECT 1 FROM UNNEST(string_to_array(d.tags, ',')) AS t1",
+    "      WHERE TRIM(t1) IN (SELECT TRIM(t2) FROM UNNEST(string_to_array(r.allergens, ',')) AS t2)",
     '    )',
     '  );',
   ].join('\n');

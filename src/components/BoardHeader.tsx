@@ -25,14 +25,25 @@ export function BoardHeader({
             <label className="field-label" htmlFor="budget">
               Budget per person
             </label>
-            <input
-              id="budget"
-              className={`input input-rupees ${budgetInvalid ? 'is-invalid' : ''}`}
-              value={budget}
-              onChange={(e) => onBudget(e.target.value)}
-              inputMode="numeric"
-              autoComplete="off"
-            />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <input
+                type="range"
+                min="0"
+                max="500"
+                step="10"
+                value={Number(budget) || 0}
+                onChange={(e) => onBudget(e.target.value)}
+                style={{ width: '100px' }}
+              />
+              <input
+                id="budget"
+                className={`input input-rupees ${budgetInvalid ? 'is-invalid' : ''}`}
+                value={budget}
+                onChange={(e) => onBudget(e.target.value)}
+                inputMode="numeric"
+                autoComplete="off"
+              />
+            </div>
           </div>
 
           <button type="button" className="btn btn-primary" onClick={onCheck}>

@@ -56,8 +56,8 @@ function reducer(state: BoardState, action: Action): BoardState {
           r.key !== action.key
             ? r
             : action.field === 'allergens'
-              ? { ...r, allergens: splitCommaList(action.value) }
-              : { ...r, [action.field]: action.value },
+              ? { ...r, allergens: splitCommaList(action.value.toUpperCase()) }
+              : { ...r, [action.field]: action.value.toUpperCase() },
         ),
       });
 
@@ -67,14 +67,14 @@ function reducer(state: BoardState, action: Action): BoardState {
           d.key !== action.key
             ? d
             : action.field === 'tags'
-              ? { ...d, tags: splitCommaList(action.value) }
-              : { ...d, [action.field]: action.value },
+              ? { ...d, tags: splitCommaList(action.value.toUpperCase()) }
+              : { ...d, [action.field]: action.value.toUpperCase() },
         ),
       });
 
     case 'addResident':
       return edited(state, {
-        group: [...state.group, { key: newKey(), name: 'New Resident', diet: 'VEGETARIAN', allergens: [] }],
+        group: [...state.group, { key: newKey(), name: 'NEW RESIDENT', diet: 'VEGETARIAN', allergens: [] }],
       });
 
     case 'removeResident':
@@ -84,7 +84,7 @@ function reducer(state: BoardState, action: Action): BoardState {
       return edited(state, {
         dishes: [
           ...state.dishes,
-          { key: newKey(), id: 'D0X', cafe: 'New Cafe', name: 'New Dish', diet: 'VEGAN', tags: [], price: '0' },
+          { key: newKey(), id: 'D0X', cafe: 'NEW CAFE', name: 'NEW DISH', diet: 'VEGAN', tags: [], price: '0' },
         ],
       });
 
@@ -97,7 +97,7 @@ function reducer(state: BoardState, action: Action): BoardState {
     // The search box is NOT an input edit — it never invalidates the report,
     // because filtering is applied to an already-calculated compatible result.
     case 'setQuery':
-      return { ...state, query: action.value };
+      return { ...state, query: action.value.toUpperCase() };
 
     case 'check':
       return { ...state, report: evaluate(state.group, state.dishes, state.budget) };
