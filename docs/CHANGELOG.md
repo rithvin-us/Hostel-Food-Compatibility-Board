@@ -90,7 +90,7 @@ The baseline interface focused strictly on contract verification and tabular out
 - Simple Result list with search filtering.
 
 #### Baseline UI Screenshot
-![Baseline Interface](./docs/baseline_ui.png)
+![Baseline Interface](./screenshots/image.png)
 > *Note: The baseline UI featured standard grey surface styling and text-only verdict tallies.*
 
 ---
@@ -104,20 +104,7 @@ The refined interface introduces an interactive Analytics & Insights layer above
 - **Smart Recommendation Card**: Proactive suggestion box highlighting the smallest change needed to unlock more compatible food options.
 
 #### Refined UI Visual Layout
-```
-+-----------------------------------------------------------------------------------+
-| 🎉 Universal Feast Unlocked! 100% of menu dishes compatible for every resident.   |
-+---------------------------------------------------+-------------------------------+
-|  GROUP HARMONY INDEX                              |  EXCLUSION ROOT-CAUSE         |
-|  [ SVG Circular Gauge: 40% ]                      |  Dietary:   40% [====    ]    |
-|  Status: Moderate Friction                        |  Allergen:  40% [====    ]    |
-|  2 / 5 Dishes Compatible                          |  Budget:    20% [==      ]    |
-+---------------------------------------------------+-------------------------------+
-|  RESIDENT CONSTRAINTS                             |  💡 SMART RECOMMENDATION      |
-|  Asha:  [Diet: 2]                                 |  Increasing budget by ₹10    |
-|  Dev:   [Allergen: 1]                             |  unlocks Tomato Pasta!        |
-+---------------------------------------------------+-------------------------------+
-```
+![Refined Analytics-Driven Interface](./screenshots/image%20copy.png)
 
 ---
 
@@ -130,26 +117,7 @@ Version 1.1.0's analytics layer visualized the right data with the wrong visual 
 - **Ranked Resident Bars**: magnitude-proportional, with an auto-generated insight line naming the tightest constraint.
 
 #### Refined UI Visual Layout
-```
-+-----------------------------------------------------------------------------------+
-| ✓ Universal Feast. All 5 dishes clear every resident.                             |
-+-----------------------------------------------------------------------------------+
-| COMPATIBILITY SPECTRUM                     2 of 5 dishes compatible, in table order|
-| [pass][diet][pass][allergen][budget]                                              |
-| ■ passes   ▨ diet   ■ allergen   ■ over budget                                    |
-+---------------------------------------------------+-------------------------------+
-|  GROUP HARMONY                  [Moderate Friction]|  EXCLUSION ROOT CAUSE         |
-|  40%   2 of 5 dishes compatible                    |  [▨▨▨▨|████|░░]  5 reasons    |
-|  [====----------------] 30    60    100            |  diet 40% · allergen 40% ·    |
-|                                                     |  budget 20%                   |
-+---------------------------------------------------+-------------------------------+
-|  RESIDENT CONSTRAINTS                              |  NEXT UNLOCK                  |
-|  Asha clears the fewest dishes — 2 exclusions.     |  Increasing budget by ₹10      |
-|  Asha  [▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨▨] 2                    |  (to ₹160) unlocks 1 dish:    |
-|  Dev   [██████████] 1                              |  Tomato Pasta.                 |
-|  Mira  ✓ clear                                     |                                |
-+---------------------------------------------------+-------------------------------+
-```
+![Design-System-Unified Analytics](./screenshots/image%20copy%202.png)
 
 ---
 

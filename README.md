@@ -2,6 +2,8 @@
 
 **Live:** [hostel-food-compatibility-board.vercel.app](https://hostel-food-compatibility-board.vercel.app)
 
+![Design-System-Unified Analytics](./screenshots/image%20copy%202.png)
+
 Pick one dish a group of hostel residents can all eat — applying their diets, allergen exclusions and
 a per-person budget to dishes from nearby campus cafes — and show the exact reason every other dish
 was excluded.
@@ -61,6 +63,17 @@ Built in, from the problem statement. Group budget ₹150 per person.
 
 Expected result: **D01 and D02**, count 2.
 Exclusions: D03 `DIET:Asha, ALLERGEN:Mira:MILK` · D04 `ALLERGEN:Dev:PEANUT` · D05 `DIET:Asha, DIET:Dev`.
+
+## Constraints & Edge Cases
+
+The domain engine strictly enforces the following rules and edge cases (see `docs/DESIGN.md` for full details):
+1. **Separation of Concerns:** `src/domain` is pure TypeScript with zero React imports. The business logic contract is fully isolated from the UI.
+2. **Strict Invalidation:** The compatibility count is frozen at evaluation time. Any edit to a resident, dish, or budget immediately clears the current result to prevent the screen from ever displaying a stale verdict.
+3. **Domain Assumptions:**
+   - A `NON_VEGETARIAN` resident accepts every dish class.
+   - Duplicated ingredient tags on a dish only yield a single allergen violation.
+   - A dish must have at least one ingredient, and a group must have at least one resident.
+   - Duplicate resident names are permitted; only Dish IDs must be strictly unique.
 
 ## Layout
 
